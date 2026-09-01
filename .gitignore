@@ -1,2 +1,4 @@
 .env
 .idea
+/deployment/docker-compose/.env.deploy
+**/.env
