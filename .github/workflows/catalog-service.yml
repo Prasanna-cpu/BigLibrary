@@ -26,6 +26,9 @@ jobs:
       - name: Make Maven Wrapper executable
         run: chmod +x mvnw
 
+      - name: Format code
+        run: ./mvnw spotless:apply
+
       - name: Build
         run: ./mvnw -ntp verify
 
