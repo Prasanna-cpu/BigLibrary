@@ -24,7 +24,9 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
       - name: Build
-        run: ./mvnw -ntp verify
+        run: |
+          chmod +x mvnw
+          ./mvnw -ntp verify
 
       - if: ${{ github.ref == 'refs/heads/main' }}
         name: Login to Docker Hub
