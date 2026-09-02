@@ -13,6 +13,7 @@ public class CatalogServiceApplication {
 		System.out.println("Welcome to Catalog Service Application");
 		System.out.println("Running on port 8081");
 		System.out.println("Running on port 8081");
+		System.out.println("We are using Pagination");
 		SpringApplication.run(CatalogServiceApplication.class, args);
 	}
 
