@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://catalogDB:5432/catalogDB}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}

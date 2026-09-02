@@ -1,0 +1,20 @@
+name: 'big-library'
+services:
+  catalog-service:
+    image: 'prasannakumar22/biglibrary-catalog-service:latest'
+    ports:
+      - '8081:8081'
+    container_name: catalog-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_URL=jdbc:postgresql://catalogDB:5432/catalogDB
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+    restart: unless-stopped
+    depends_on:
+      catalogDB:
+        condition: service_healthy
+    deploy:
+        resources:
+            limits:
+              memory: 700m
