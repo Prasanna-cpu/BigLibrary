@@ -12,6 +12,7 @@ public class CatalogServiceApplication {
 		System.setProperty("user.timezone", "Asia/Kolkata");
 		System.out.println("Welcome to Catalog Service Application");
 		System.out.println("Running on port 8081");
+		System.out.println("Running on port 8081");
 		SpringApplication.run(CatalogServiceApplication.class, args);
 	}
 
