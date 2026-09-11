@@ -11,6 +11,8 @@ services:
       POSTGRES_DB: 'catalogDB'
     ports:
       - '15432:5432'
+    volumes:
+      - catalogdb_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -20,3 +22,69 @@ services:
       resources:
         limits:
           memory: 500m
+  orderDB:
+    image: 'postgres:16-alpine'
+    container_name: 'orderDB'
+    env_file:
+      - .env.deploy
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: 'orderDB'
+    ports:
+      - '25432:5432'
+    volumes:
+      - orderdb_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+  notificationDB:
+    image: 'postgres:16-alpine'
+    container_name: 'notificationDB'
+    env_file:
+      - .env.deploy
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: 'orderDB'
+    ports:
+      - '35432:5432'
+    volumes:
+      - notificationdb_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+  biglibrary-rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: 'biglibrary-rabbitmq'
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER:-guest}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS:-guest}
+    ports:
+      - '15672:15672'
+      - '5672:5672'
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 30s
+      timeout: 30s
+      retries: 10
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+volumes:
+  catalogdb_data:
+  orderdb_data:
+  notificationdb_data:

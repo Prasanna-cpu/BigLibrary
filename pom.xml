@@ -23,6 +23,8 @@
     <modules>
         <!-- Add child modules here -->
         <module>catalog-service</module>
+        <module>order-service</module>
+        <module>notification-service</module>
     </modules>
 
     <build>

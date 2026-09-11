@@ -18,3 +18,29 @@ services:
         resources:
             limits:
               memory: 700m
+
+  order-service:
+    image: 'prasannakumar22/biglibrary-order-service:latest'
+    ports:
+      - '8082:8082'
+    container_name: order-service
+    environment:
+        - SPRING_PROFILES_ACTIVE=docker
+        - ORDER_CATALOG_SERVICE_URL=http://catalog-service:8081
+        - DB_URL=jdbc:postgresql://orderDB:5432/orderDB
+        - DB_USER=postgres
+        - DB_PASSWORD=postgres
+        - RABBITMQ_HOST=biglibrary-rabbitmq
+        - RABBITMQ_PORT=5672
+        - RABBITMQ_USERNAME=guest
+        - RABBITMQ_PASSWORD=guest
+    restart: unless-stopped
+    depends_on:
+      orderDB:
+        condition: service_healthy
+      biglibrary-rabbitmq:
+        condition: service_healthy
+    deploy:
+        resources:
+            limits:
+              memory: 700m
