@@ -44,3 +44,31 @@ services:
         resources:
             limits:
               memory: 700m
+
+  notification-service:
+    image: 'prasannakumar22/biglibrary-notification-service:latest'
+    ports:
+      - '8083:8083'
+    container_name: notification-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_URL=jdbc:postgresql://notificationDB:5432/notificationDB
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - RABBITMQ_HOST=biglibrary-rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - MAIL_HOST=mailhog
+      - MAIL_PORT=1025
+    depends_on:
+      notificationDB:
+        condition: service_healthy
+      biglibrary-rabbitmq:
+        condition: service_healthy
+      mailhog:
+        condition: service_started
+    deploy:
+      resources:
+        limits:
+          memory: 700m

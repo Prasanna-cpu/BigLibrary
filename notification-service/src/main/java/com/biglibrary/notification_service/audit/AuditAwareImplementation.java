@@ -7,8 +7,8 @@ import java.util.Optional;
 
 @Component("auditAwareImplementation")
 public class AuditAwareImplementation implements AuditorAware<String> {
-    @Override
-    public Optional<String> getCurrentAuditor() {
-        return Optional.empty();
-    }
+	@Override
+	public Optional<String> getCurrentAuditor() {
+		return Optional.empty();
+	}
 }

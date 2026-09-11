@@ -3,7 +3,7 @@ spring:
     name: notification-service
 
   datasource:
-    url: jdbc:postgresql://localhost:35432/notificationDB
+    url: jdbc:postgresql://localhost:35432/notificationDB?TimeZone=UTC
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
@@ -16,8 +16,20 @@ spring:
     username: guest
     password: guest
 
+  mail:
+    host: ${MAIL_HOST:127.0.0.1}
+    port: ${MAIL_PORT:1025}
+    username: ${MAIL_USERNAME:PLACEHOLDER}
+    password: ${MAIL_PASSWORD:PLACEHOLDER}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 server:
-  port: 8082
+  port: 8083
   shutdown: graceful
 
 management:
@@ -37,6 +49,7 @@ notifications:
   delivered-orders-queue: delivered-orders
   cancelled-orders-queue: cancelled-orders
   error-orders-queue: error-orders
+  support-email: "kumar@gmail.com"
 #  catalog-service-url: http://localhost:8081
 
 

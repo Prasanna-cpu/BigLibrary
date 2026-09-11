@@ -52,7 +52,7 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: 'orderDB'
+      POSTGRES_DB: 'notificationDB'
     ports:
       - '35432:5432'
     volumes:
@@ -84,6 +84,12 @@ services:
       resources:
         limits:
           memory: 500m
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    container_name: mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
 volumes:
   catalogdb_data:
   orderdb_data:

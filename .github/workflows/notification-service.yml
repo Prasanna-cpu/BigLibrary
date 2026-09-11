@@ -1,8 +1,8 @@
-name: catalog-service.yml
+name: notification-service.yml
 on:
   push:
     paths:
-      - catalog-service/**
+      - notification-service/**
     branches:
       - 'main'
 
@@ -11,8 +11,8 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     env:
-      working-directory: ./catalog-service
-      DOCKER_IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/catalog-service
+      working-directory: ./notification-service
+      DOCKER_IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/notification-service
     defaults:
       run:
         working-directory: ${{env.working-directory}}
@@ -43,7 +43,8 @@ jobs:
       - if: ${{ github.ref == 'refs/heads/main' }}
         name: Build and Publish Docker Image
         run: |
-            ./mvnw spring-boot:build-image -DskipTests
-            echo "Pushing the image prasannakumar22/biglibrary-catalog-service:latest to Docker Hub..."
-            docker push prasannakumar22/biglibrary-catalog-service:latest
+          ./mvnw spring-boot:build-image -DskipTests
+          echo "Pushing the image prasannakumar22/biglibrary-notification-service:latest to Docker Hub..."
+          docker push prasannakumar22/biglibrary-notification-service:latest
+
 

@@ -1,7 +1,6 @@
 package com.biglibrary.notification_service.dto;
 
-import com.biglibrary.order_service.dto.AddressDTO;
-import com.biglibrary.order_service.enums.OrderStatus;
+import com.biglibrary.notification_service.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

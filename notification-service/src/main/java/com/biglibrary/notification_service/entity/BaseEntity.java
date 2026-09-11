@@ -1,6 +1,5 @@
 package com.biglibrary.notification_service.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -13,16 +12,16 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class BaseModel {
+public class BaseEntity {
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false)
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDateTime createdAt;
+	@CreatedDate
+	@Column(name = "created_at", updatable = false)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDateTime updatedAt;
+	@LastModifiedDate
+	@Column(name = "updated_at")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	private LocalDateTime updatedAt;
 
 }
