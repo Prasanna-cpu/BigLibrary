@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+          globalcors:
+            cors-configurations:
+                '[/**]':
+                    allowedOriginPatterns: "*"
+                    allowedMethods:
+                    - GET
+                    - POST
+                    - PUT
+                    - DELETE
+                    - OPTIONS
+                    allowedHeaders: "*"
+                    allowCredentials: true
+          routes:
+            - id: catalog-service
+              uri: ${CATALOG_SERVICE_URL:http://localhost:8081}
+              predicates:
+                - Path=/api/catalog/**, /api/products/**
+              filters:
+                - RewritePath=/api/catalog/(?<segment>.*), /api/products/${segment}
+            - id: order-service
+              uri: ${ORDER_SERVICE_URL:http://localhost:8082}
+              predicates:
+                - Path=/api/orders/**
+              filters:
+                - RewritePath=/api/orders/(?<segment>.*), /api/orders/${segment}
+            - id: catalog-service-docs
+              uri: ${CATALOG_SERVICE_URL:http://localhost:8081}
+              predicates:
+                - Path=/v3/api-docs/catalog/**
+              filters:
+                - RewritePath=/v3/api-docs/catalog/?(?<segment>.*), /v3/api-docs${segment}
+            - id: order-service-docs
+              uri: ${ORDER_SERVICE_URL:http://localhost:8082}
+              predicates:
+                - Path=/v3/api-docs/order/**
+              filters:
+                - RewritePath=/v3/api-docs/order/?(?<segment>.*), /v3/api-docs${segment}
+            - id: openapi
+              uri: http://localhost:${server.port}
+              predicates:
+                - Path=/v3/api-docs
+
+mvc:
+  problemdetails:
+    enabled: true
+
+server:
+  port: 8080
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+
