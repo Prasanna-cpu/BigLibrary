@@ -45,5 +45,5 @@ jobs:
         run: |
           ./mvnw spring-boot:build-image -DskipTests
           echo "Pushing the image prasannakumar22/biglibrary-auth-service:latest to Docker Hub..."
-          docker push prasannakumar22/biglibrary-auth-service-service:latest
+          docker push prasannakumar22/biglibrary-auth-service:latest
 

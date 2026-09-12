@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class AuthServiceApplication {
 
 	public static void main(String[] args) {
+
+		System.out.println("Auth Service Started");
+
 		SpringApplication.run(AuthServiceApplication.class, args);
 	}
 
