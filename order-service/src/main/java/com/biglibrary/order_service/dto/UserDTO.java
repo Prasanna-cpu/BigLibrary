@@ -14,11 +14,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-    private UUID id;
-    private String fullName;
-    private String email;
+	private UUID id;
+	private String fullName;
+	private String email;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
-    private UserRoles role;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private String password;
+	private UserRoles role;
 }

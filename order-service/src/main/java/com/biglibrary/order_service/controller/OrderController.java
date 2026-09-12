@@ -26,29 +26,23 @@ public class OrderController {
 
 	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CreateOrderResponse createOrderHandler(
-			@Valid @RequestBody CreateOrderRequest request,
-			@RequestHeader("Authorization") String jwt
-	) {
+	public CreateOrderResponse createOrderHandler(@Valid @RequestBody CreateOrderRequest request,
+			@RequestHeader("Authorization") String jwt) {
 		String userName = securityService.getLoginUsername(jwt);
 		return orderService.createOrder(userName, request);
 	}
 
 	@GetMapping("/all")
 	@ResponseStatus(HttpStatus.OK)
-	List<OrderSummary> getOrders(
-			@RequestHeader("Authorization") String jwt
-	) {
+	List<OrderSummary> getOrders(@RequestHeader("Authorization") String jwt) {
 		String userName = securityService.getLoginUsername(jwt);
 		log.info("Fetching orders for user: {}", userName);
 		return orderService.findOrders(userName);
 	}
 
 	@GetMapping("/order/{orderNumber}")
-	public ResponseEntity<ApiResponse> getOrderByOrderNumberHandler(
-			@PathVariable String orderNumber,
-			@RequestHeader("Authorization") String jwt
-	) {
+	public ResponseEntity<ApiResponse> getOrderByOrderNumberHandler(@PathVariable String orderNumber,
+			@RequestHeader("Authorization") String jwt) {
 		String userName = securityService.getLoginUsername(jwt);
 		OrdersDTO orderDTO = orderService.getOrderByOrderNumber(orderNumber, userName);
 		log.info("Fetching order for user: {}", userName);

@@ -5,7 +5,6 @@ import com.biglibrary.order_service.response.ApiResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -20,14 +19,11 @@ public class ProductServiceClient {
 	private final RestClient client;
 	private final ObjectMapper objectMapper;
 
-	public ProductServiceClient(
-			@Qualifier("restClient") RestClient client,
-			@Qualifier("objectMapper") ObjectMapper objectMapper
-	) {
+	public ProductServiceClient(@Qualifier("restClient") RestClient client,
+			@Qualifier("objectMapper") ObjectMapper objectMapper) {
 		this.client = client;
 		this.objectMapper = objectMapper;
 	}
-
 
 	@CircuitBreaker(name = "catalog-service", fallbackMethod = "getProductByCodeFallback")
 	@Retry(name = "catalog-service")
