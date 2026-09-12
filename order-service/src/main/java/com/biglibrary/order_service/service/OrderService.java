@@ -37,7 +37,7 @@ public class OrderService {
 	public CreateOrderResponse createOrder(String userName, CreateOrderRequest createOrderRequest) {
 		orderValidation.validateOrder(createOrderRequest);
 		Orders newOrder = OrderMapper.mapToOrders(createOrderRequest);
-		newOrder.setUserName(createOrderRequest.getUserName());
+		newOrder.setUserName(userName);
 		Orders savedOrder = orderRepository.saveAndFlush(newOrder);
 		log.info("Order created successfully with order number: {}", savedOrder.getOrderNumber());
 		OrderCreatedEvent orderCreatedEvent = OrderEventMapper.buildOrderCreatedEvent(savedOrder);

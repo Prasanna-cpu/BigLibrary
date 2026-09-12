@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://authDB:5432/authDB}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+
+  application:
+    name: auth-service

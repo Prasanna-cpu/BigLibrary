@@ -29,7 +29,8 @@ management:
       exposure:
         include: "*"
 
-
+auth-service:
+  url: http://localhost:4000
 
 order:
   order-events-exchange: orders-exchange
@@ -53,6 +54,15 @@ resilience4j:
   circuitbreaker:
     backends:
       catalog-service:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 6
+        minimum-number-of-calls: 5
+        wait-duration-in-open-state:
+          seconds: 20
+        permitted-number-of-calls-in-half-open-state: 2
+        failure-rate-threshold: 50
+
+      auth-service:
         sliding-window-type: COUNT_BASED
         sliding-window-size: 6
         minimum-number-of-calls: 5

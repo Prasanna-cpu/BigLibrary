@@ -1,4 +1,4 @@
-package com.biglibrary.response;
+package com.biglibrary.catalog_service.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

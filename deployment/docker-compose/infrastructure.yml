@@ -66,6 +66,28 @@ services:
       resources:
         limits:
           memory: 500m
+  authDB:
+    image: 'postgres:16-alpine'
+    container_name: 'authDB'
+    env_file:
+      - .env.deploy
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: 'authDB'
+    ports:
+      - '45432:5432'
+    volumes:
+      - authdb_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 500m
   biglibrary-rabbitmq:
     image: rabbitmq:3.12-management
     container_name: 'biglibrary-rabbitmq'
@@ -90,7 +112,26 @@ services:
     ports:
       - "1025:1025"
       - "8025:8025"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.2
+    command: ['start-dev', '--import-realm', '--http-port=9191']
+    container_name: 'keycloak'
+    hostname: 'keycloak'
+    volumes:
+      - ./realm-config:/opt/keycloak/data/import
+    environment:
+        KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+        KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin1234}
+    ports:
+      - '9191:9191'
+    deploy:
+        resources:
+            limits:
+              memory: 2gb
+
 volumes:
   catalogdb_data:
   orderdb_data:
   notificationdb_data:
+  authdb_data:

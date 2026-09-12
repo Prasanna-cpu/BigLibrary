@@ -3,7 +3,7 @@ package com.biglibrary.catalog_service.web.controllers;
 import com.biglibrary.catalog_service.dto.ProductDTO;
 import com.biglibrary.catalog_service.records.PagedResult;
 import com.biglibrary.catalog_service.service.ProductService;
-import com.biglibrary.response.ApiResponse;
+import com.biglibrary.catalog_service.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
