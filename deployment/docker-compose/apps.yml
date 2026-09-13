@@ -1,10 +1,10 @@
-name: 'big-library'
+name: 'biglibrary'
 services:
   catalog-service:
     image: 'prasannakumar22/biglibrary-catalog-service:latest'
     ports:
       - '8081:8081'
-    container_name: catalog-service
+#    container_name: catalog-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - DB_URL=jdbc:postgresql://catalogDB:5432/catalogDB
@@ -23,7 +23,7 @@ services:
     image: 'prasannakumar22/biglibrary-order-service:latest'
     ports:
       - '8082:8082'
-    container_name: order-service
+#    container_name: order-service
     environment:
         - SPRING_PROFILES_ACTIVE=docker
         - ORDER_CATALOG_SERVICE_URL=http://catalog-service:8081
@@ -38,7 +38,7 @@ services:
     depends_on:
       orderDB:
         condition: service_healthy
-      biglibrary-rabbitmq:
+      rabbitmq:
         condition: service_healthy
     deploy:
         resources:
@@ -49,7 +49,7 @@ services:
     image: 'prasannakumar22/biglibrary-notification-service:latest'
     ports:
       - '8083:8083'
-    container_name: notification-service
+#    container_name: notification-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - DB_URL=jdbc:postgresql://notificationDB:5432/notificationDB
@@ -64,7 +64,7 @@ services:
     depends_on:
       notificationDB:
         condition: service_healthy
-      biglibrary-rabbitmq:
+      rabbitmq:
         condition: service_healthy
       mailhog:
         condition: service_started
@@ -79,7 +79,7 @@ services:
       - '4000:4000'
     env_file:
       - .env.deploy
-    container_name: auth-service
+#    container_name: auth-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - DB_URL=jdbc:postgresql://authDB:5432/authDB
@@ -101,7 +101,7 @@ services:
     image: 'prasannakumar22/biglibrary-gateway:latest'
     ports:
       - '8080:8080'
-    container_name: gateway
+#    container_name: gateway
     env_file:
       - .env.deploy
     environment:

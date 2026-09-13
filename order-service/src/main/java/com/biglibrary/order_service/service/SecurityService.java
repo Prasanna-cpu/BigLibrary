@@ -5,12 +5,14 @@ import com.biglibrary.order_service.dto.UserDTO;
 import com.biglibrary.order_service.exceptions.ObjectNotFoundException;
 import com.biglibrary.order_service.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityService {
 
 	private final UserServiceClient userServiceClient;
@@ -20,6 +22,9 @@ public class SecurityService {
 				.orElseThrow(() -> new ObjectNotFoundException("User not found"));
 		UserDTO userDTO = userServiceClient.extractUserDTO(Optional.of(apiResponse))
 				.orElseThrow(() -> new ObjectNotFoundException("User not found"));
+
+		log.info("Getting email : {}", userDTO.getEmail());
+
 		return userDTO;
 	}
 

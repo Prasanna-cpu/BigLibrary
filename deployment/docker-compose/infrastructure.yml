@@ -1,8 +1,8 @@
-name: 'big-library'
+name: 'biglibrary'
 services:
   catalogDB:
     image: 'postgres:16-alpine'
-    container_name: 'catalogDB'
+#    container_name: 'catalogDB'
     env_file:
       - .env.deploy
     environment:
@@ -24,7 +24,7 @@ services:
           memory: 500m
   orderDB:
     image: 'postgres:16-alpine'
-    container_name: 'orderDB'
+#    container_name: 'orderDB'
     env_file:
       - .env.deploy
     environment:
@@ -46,7 +46,7 @@ services:
           memory: 500m
   notificationDB:
     image: 'postgres:16-alpine'
-    container_name: 'notificationDB'
+#    container_name: 'notificationDB'
     env_file:
       - .env.deploy
     environment:
@@ -68,7 +68,7 @@ services:
           memory: 500m
   authDB:
     image: 'postgres:16-alpine'
-    container_name: 'authDB'
+#    container_name: 'authDB'
     env_file:
       - .env.deploy
     environment:
@@ -88,15 +88,17 @@ services:
       resources:
         limits:
           memory: 500m
-  biglibrary-rabbitmq:
+  rabbitmq:
     image: rabbitmq:3.12-management
-    container_name: 'biglibrary-rabbitmq'
+#    container_name: 'biglibrary-rabbitmq'
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER:-guest}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS:-guest}
     ports:
       - '15672:15672'
       - '5672:5672'
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
     healthcheck:
       test: rabbitmq-diagnostics check_port_connectivity
       interval: 30s
@@ -135,3 +137,4 @@ volumes:
   orderdb_data:
   notificationdb_data:
   authdb_data:
+  rabbitmq_data:
