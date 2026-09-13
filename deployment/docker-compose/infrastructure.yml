@@ -18,6 +18,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+#    networks:
+#      - biglibrary-network
     deploy:
       resources:
         limits:
@@ -40,6 +42,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+#    networks:
+#      - biglibrary-network
     deploy:
       resources:
         limits:
@@ -62,6 +66,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+#    networks:
+#      - biglibrary-network
     deploy:
       resources:
         limits:
@@ -84,6 +90,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+#    networks:
+#      - biglibrary-network
     deploy:
       resources:
         limits:
@@ -104,6 +112,8 @@ services:
       interval: 30s
       timeout: 30s
       retries: 10
+#    networks:
+#      - biglibrary-network
     deploy:
       resources:
         limits:
@@ -114,6 +124,8 @@ services:
     ports:
       - "1025:1025"
       - "8025:8025"
+#    networks:
+#      - biglibrary-network
 
 #  keycloak:
 #    image: quay.io/keycloak/keycloak:24.0.2
@@ -138,3 +150,7 @@ volumes:
   notificationdb_data:
   authdb_data:
   rabbitmq_data:
+
+#networks:
+#  biglibrary-network:
+#    driver: bridge

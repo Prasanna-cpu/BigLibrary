@@ -27,10 +27,11 @@ services:
     environment:
         - SPRING_PROFILES_ACTIVE=docker
         - ORDER_CATALOG_SERVICE_URL=http://catalog-service:8081
+        - AUTH_SERVICE_URL=http://auth-service:4000
         - DB_URL=jdbc:postgresql://orderDB:5432/orderDB
         - DB_USER=postgres
         - DB_PASSWORD=postgres
-        - RABBITMQ_HOST=biglibrary-rabbitmq
+        - RABBITMQ_HOST=rabbitmq
         - RABBITMQ_PORT=5672
         - RABBITMQ_USERNAME=guest
         - RABBITMQ_PASSWORD=guest
@@ -55,7 +56,7 @@ services:
       - DB_URL=jdbc:postgresql://notificationDB:5432/notificationDB
       - DB_USER=postgres
       - DB_PASSWORD=postgres
-      - RABBITMQ_HOST=biglibrary-rabbitmq
+      - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
       - RABBITMQ_USERNAME=guest
       - RABBITMQ_PASSWORD=guest
@@ -109,12 +110,24 @@ services:
       - CATALOG_SERVICE_URL=http://catalog-service:8081
       - ORDER_SERVICE_URL=http://order-service:8082
       - AUTH_SERVICE_URL=http://auth-service:4000
-
+    depends_on:
+      catalog-service:
+        condition: service_started
+      order-service:
+        condition: service_started
+      auth-service:
+        condition: service_started
     restart: unless-stopped
     deploy:
       resources:
         limits:
           memory: 700m
+#    networks:
+#      - biglibrary-network
+
+#networks:
+#  biglibrary-network:
+#    external: true
 
 
 
